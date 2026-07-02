@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yohanes Christian — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #060b14;
+    --surface:  #0d1626;
+    --card:     #111d2e;
+    --border:   rgba(255,255,255,0.07);
+    --accent:   #00d4ff;
+    --accent2:  #0098d4;
+    --gold:     #f0b429;
+    --text:     #e8f0fe;
+    --muted:    #7a8fa6;
+    --white:    #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ── Custom cursor ── */
+  .cursor {
+    position: fixed; width: 12px; height: 12px;
+    background: var(--accent); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transition: transform .15s, opacity .15s;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    position: fixed; width: 36px; height: 36px;
+    border: 1.5px solid var(--accent); border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    transition: transform .35s cubic-bezier(.16,1,.3,1);
+    opacity: .5;
+  }
+
+  /* ── Noise overlay ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+    pointer-events: none; opacity: .4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px;
+    backdrop-filter: blur(20px);
+    background: rgba(6,11,20,.7);
+    border-bottom: 1px solid var(--border);
+    transition: padding .3s;
+  }
+  nav.scrolled { padding: 14px 60px; }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.1rem;
+    letter-spacing: 2px; color: var(--white);
+    text-transform: uppercase;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: .8rem; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--muted); text-decoration: none;
+    transition: color .2s;
+    font-weight: 500;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 120px 60px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+  }
+  .hero-glow {
+    position: absolute; width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(0,212,255,.12) 0%, transparent 70%);
+    top: -200px; right: -100px; z-index: 0; pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 900px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--border);
+    background: rgba(0,212,255,.06);
+    padding: 6px 16px; border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .72rem; color: var(--accent);
+    margin-bottom: 32px;
+    animation: fadeUp .8s ease both;
+  }
+  .badge-dot {
+    width: 6px; height: 6px; background: var(--accent);
+    border-radius: 50%; animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .4; transform: scale(.7); }
+  }
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: clamp(3rem, 8vw, 6.5rem);
+    line-height: .95; letter-spacing: -2px;
+    color: var(--white);
+    animation: fadeUp .8s .1s ease both;
+  }
+  .hero-name .line2 { color: var(--accent); }
+  .hero-subtitle {
+    margin-top: 24px;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--muted); font-weight: 300; max-width: 520px;
+    line-height: 1.7;
+    animation: fadeUp .8s .2s ease both;
+  }
+  .hero-subtitle strong { color: var(--text); font-weight: 500; }
+  .hero-cta {
+    margin-top: 44px; display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeUp .8s .3s ease both;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 28px; border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .85rem; font-weight: 500;
+    text-decoration: none; letter-spacing: .5px;
+    transition: all .25s;
+  }
+  .btn-primary {
+    background: var(--accent); color: var(--bg);
+  }
+  .btn-primary:hover { background: #33deff; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,212,255,.3); }
+  .btn-ghost {
+    border: 1px solid var(--border); color: var(--text);
+    background: rgba(255,255,255,.03);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  .hero-stats {
+    margin-top: 72px; display: flex; gap: 48px;
+    animation: fadeUp .8s .4s ease both;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.4rem; font-weight: 800; color: var(--white);
+    line-height: 1;
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: .8rem; color: var(--muted); margin-top: 4px; }
+
+  .hero-photo {
+    position: absolute; right: 60px; bottom: 0; z-index: 1;
+    width: 360px;
+    animation: fadeUp .8s .2s ease both;
+  }
+  .hero-photo img {
+    width: 100%; object-fit: cover;
+    border-radius: 20px 20px 0 0;
+    filter: grayscale(20%) contrast(1.05);
+  }
+  .hero-photo::before {
+    content: ''; position: absolute; inset: -1px;
+    border-radius: 21px 21px 0 0;
+    background: linear-gradient(180deg, var(--accent) 0%, transparent 30%, transparent 60%, var(--bg) 100%);
+    z-index: 2; mix-blend-mode: color-burn; opacity: .5;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION BASE ── */
+  section { padding: 100px 60px; position: relative; z-index: 1; }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .72rem; color: var(--accent);
+    letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800; color: var(--white);
+    line-height: 1.1; margin-bottom: 16px;
+  }
+  .section-desc {
+    font-size: .95rem; color: var(--muted);
+    max-width: 540px; line-height: 1.7;
+    margin-bottom: 60px;
+  }
+  .divider {
+    height: 1px; background: var(--border);
+    margin: 0 60px;
+  }
+
+  /* ── ABOUT ── */
+  #about { background: var(--surface); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: start;
+  }
+  .about-text p {
+    font-size: .95rem; line-height: 1.85;
+    color: var(--muted); margin-bottom: 20px;
+  }
+  .about-text p strong { color: var(--text); font-weight: 500; }
+  .info-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-top: 32px;
+  }
+  .info-item {
+    padding: 16px 18px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .info-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .65rem; color: var(--accent);
+    letter-spacing: 2px; margin-bottom: 6px;
+  }
+  .info-value { font-size: .9rem; color: var(--text); font-weight: 500; }
+  .skills-col {}
+  .skill-group-title {
+    font-family: 'Syne', sans-serif;
+    font-size: .85rem; font-weight: 700;
+    color: var(--muted); letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 20px;
+    margin-top: 32px;
+  }
+  .skill-item {
+    margin-bottom: 18px;
+  }
+  .skill-row {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 8px;
+  }
+  .skill-name { font-size: .87rem; color: var(--text); font-weight: 500; }
+  .skill-pct {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .75rem; color: var(--accent);
+  }
+  .skill-track {
+    height: 3px; background: rgba(255,255,255,.06);
+    border-radius: 2px; overflow: hidden;
+  }
+  .skill-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    width: 0; transition: width 1.2s cubic-bezier(.16,1,.3,1);
+  }
+
+  /* ── EXPERIENCE ── */
+  #experience { }
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 1px; background: var(--border);
+  }
+  .timeline-item {
+    position: relative; margin-bottom: 48px;
+    opacity: 0; transform: translateX(-20px);
+    transition: all .6s ease;
+  }
+  .timeline-item.visible { opacity: 1; transform: none; }
+  .timeline-dot {
+    position: absolute; left: -38px; top: 6px;
+    width: 12px; height: 12px;
+    border: 2px solid var(--accent);
+    border-radius: 50%; background: var(--bg);
+  }
+  .timeline-dot::after {
+    content: ''; position: absolute; inset: 2px;
+    border-radius: 50%; background: var(--accent);
+    transform: scale(0); transition: transform .3s;
+  }
+  .timeline-item.visible .timeline-dot::after { transform: scale(1); }
+  .tl-header { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+  .tl-role {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem; font-weight: 700; color: var(--white);
+  }
+  .tl-period {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .72rem; color: var(--accent);
+    background: rgba(0,212,255,.08);
+    padding: 4px 10px; border-radius: 4px;
+    white-space: nowrap;
+  }
+  .tl-company {
+    font-size: .85rem; color: var(--accent);
+    margin-top: 4px; margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .tl-desc {
+    font-size: .88rem; color: var(--muted);
+    line-height: 1.75; max-width: 680px;
+  }
+  .tl-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .tag {
+    font-size: .72rem; padding: 4px 12px; border-radius: 100px;
+    border: 1px solid var(--border); color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    transition: all .2s;
+  }
+  .tag:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── PORTFOLIO ── */
+  #portfolio { background: var(--surface); }
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .portfolio-card {
+    border-radius: 14px; overflow: hidden;
+    background: var(--card);
+    border: 1px solid var(--border);
+    transition: all .35s cubic-bezier(.16,1,.3,1);
+    opacity: 0; transform: translateY(30px);
+    cursor: pointer;
+  }
+  .portfolio-card.visible { opacity: 1; transform: none; }
+  .portfolio-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(0,212,255,.3);
+    box-shadow: 0 20px 60px rgba(0,0,0,.4), 0 0 0 1px rgba(0,212,255,.1);
+  }
+  .portfolio-card.featured {
+    grid-column: span 2;
+  }
+
+  /* browser chrome */
+  .browser-chrome {
+    background: #1a2332;
+    padding: 10px 14px;
+    display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .browser-dots { display: flex; gap: 6px; }
+  .browser-dots span {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+  .dot-r { background: #ff5f57; }
+  .dot-y { background: #ffbd2e; }
+  .dot-g { background: #28ca41; }
+  .browser-url {
+    flex: 1; background: rgba(255,255,255,.06);
+    border-radius: 6px; padding: 5px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem; color: var(--muted);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .browser-url .https { color: #28ca41; }
+
+  .iframe-wrap {
+    position: relative; overflow: hidden;
+    height: 260px;
+    background: #0a0a0a;
+  }
+  .portfolio-card.featured .iframe-wrap { height: 340px; }
+  .iframe-wrap iframe {
+    width: 200%; height: 200%;
+    transform: scale(.5); transform-origin: 0 0;
+    border: none; pointer-events: none;
+    background: white;
+  }
+  .iframe-overlay {
+    position: absolute; inset: 0; z-index: 2;
+    background: linear-gradient(180deg, transparent 50%, var(--card) 100%);
+  }
+  .iframe-visit {
+    position: absolute; bottom: 16px; right: 16px; z-index: 3;
+    background: rgba(0,212,255,.12);
+    border: 1px solid rgba(0,212,255,.3);
+    color: var(--accent); font-size: .72rem;
+    padding: 6px 12px; border-radius: 6px;
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    display: flex; align-items: center; gap: 6px;
+    backdrop-filter: blur(4px);
+    transition: all .2s; opacity: 0;
+  }
+  .portfolio-card:hover .iframe-visit { opacity: 1; }
+
+  /* static preview fallback */
+  .static-preview {
+    height: 260px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 16px;
+    background: linear-gradient(135deg, #0d1626 0%, #0a1929 100%);
+    position: relative; overflow: hidden;
+  }
+  .preview-pattern {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,.04) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+  .preview-icon {
+    font-size: 2.5rem; position: relative; z-index: 1;
+  }
+  .preview-url {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .75rem; color: var(--accent); position: relative; z-index: 1;
+  }
+
+  .card-body { padding: 20px; }
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem; font-weight: 700;
+    color: var(--white); margin-bottom: 6px;
+  }
+  .card-desc {
+    font-size: .82rem; color: var(--muted); line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  /* ── AI SECTION ── */
+  #ai-skills { }
+  .ai-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 24px; margin-top: 0;
+  }
+  .ai-card {
+    padding: 32px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    position: relative; overflow: hidden;
+    transition: all .3s;
+    opacity: 0; transform: translateY(20px);
+  }
+  .ai-card.visible { opacity: 1; transform: none; }
+  .ai-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent), transparent);
+  }
+  .ai-card:hover {
+    border-color: rgba(0,212,255,.25);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,.3);
+  }
+  .ai-icon {
+    font-size: 2rem; margin-bottom: 16px; display: block;
+  }
+  .ai-card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem; font-weight: 700;
+    color: var(--white); margin-bottom: 10px;
+  }
+  .ai-card-desc {
+    font-size: .85rem; color: var(--muted); line-height: 1.7;
+  }
+
+  /* ── EDUCATION ── */
+  #education { background: var(--surface); }
+  .edu-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .edu-card {
+    padding: 28px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 12px;
+    transition: all .3s;
+  }
+  .edu-card:hover {
+    border-color: rgba(0,212,255,.2);
+    transform: translateY(-4px);
+  }
+  .edu-year {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .72rem; color: var(--accent); margin-bottom: 10px;
+  }
+  .edu-degree {
+    font-family: 'Syne', sans-serif;
+    font-size: .95rem; font-weight: 700; color: var(--white); margin-bottom: 6px;
+  }
+  .edu-school { font-size: .82rem; color: var(--muted); }
+
+  /* ── CONTACT / FOOTER ── */
+  #contact {
+    text-align: center; padding: 100px 60px;
+    background: var(--bg); position: relative; overflow: hidden;
+  }
+  #contact::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(0,212,255,.05) 0%, transparent 70%);
+  }
+  .contact-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 800; color: var(--white);
+    line-height: 1.05; position: relative; z-index: 1;
+  }
+  .contact-title span { color: var(--accent); }
+  .contact-links {
+    display: flex; gap: 16px; justify-content: center;
+    flex-wrap: wrap; margin-top: 40px; position: relative; z-index: 1;
+  }
+  .contact-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 24px; border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text); text-decoration: none;
+    font-size: .85rem; transition: all .25s;
+  }
+  .contact-link:hover {
+    border-color: var(--accent); color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0,0,0,.3);
+  }
+  footer {
+    text-align: center; padding: 28px 60px;
+    border-top: 1px solid var(--border);
+    font-size: .78rem; color: var(--muted);
+    background: var(--bg);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(0,0,0,.92);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s;
+    padding: 40px;
+    backdrop-filter: blur(8px);
+  }
+  .lightbox.open { opacity: 1; pointer-events: all; }
+  .lightbox-inner {
+    width: 100%; max-width: 1100px; height: 80vh;
+    border-radius: 16px; overflow: hidden;
+    background: #0d1626;
+    border: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    transform: scale(.95); transition: transform .3s;
+  }
+  .lightbox.open .lightbox-inner { transform: scale(1); }
+  .lightbox-chrome {
+    background: #1a2332; padding: 12px 16px;
+    display: flex; align-items: center; gap: 12px;
+    border-bottom: 1px solid var(--border); flex-shrink: 0;
+  }
+  .lightbox-url {
+    flex: 1; background: rgba(255,255,255,.06);
+    padding: 6px 14px; border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .78rem; color: var(--text);
+  }
+  .lightbox-close {
+    background: rgba(255,255,255,.08); border: none;
+    color: var(--text); font-size: 1.1rem;
+    width: 30px; height: 30px;
+    border-radius: 8px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s; margin-left: 8px;
+  }
+  .lightbox-close:hover { background: rgba(255,0,0,.2); color: #ff5f57; }
+  .lightbox-iframe {
+    flex: 1; border: none; background: white;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+  /* ── ANIMATIONS ── */
+  .fade-in {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 1024px) {
+    nav { padding: 18px 30px; }
+    section { padding: 80px 30px; }
+    #hero { padding: 100px 30px 60px; }
+    .hero-photo { display: none; }
+    .portfolio-grid { grid-template-columns: 1fr 1fr; }
+    .portfolio-card.featured { grid-column: span 1; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+  @media (max-width: 640px) {
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .ai-grid { grid-template-columns: 1fr; }
+    .edu-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">YC<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#ai-skills">AI Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Available for New Opportunities
+    </div>
+    <h1 class="hero-name">
+      YOHANES<br>
+      <span class="line2">CHRISTIAN</span>
+    </h1>
+    <p class="hero-subtitle">
+      <strong>Graphic & Web Designer</strong> dengan pengalaman lebih dari
+      <strong>8+ tahun</strong>. Sekarang juga mengembangkan keahlian di
+      bidang <strong>AI Generative Content</strong> — web, video, dan gambar.
+    </p>
+    <div class="hero-cta">
+      <a href="#portfolio" class="btn btn-primary">
+        <span>Lihat Portfolio</span>
+        <span>↓</span>
+      </a>
+      <a href="#contact" class="btn btn-ghost">
+        <span>Hubungi Saya</span>
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">8<span>+</span></div>
+        <div class="stat-label">Tahun Pengalaman</div>
+      </div>
+      <div>
+        <div class="stat-num">7<span>+</span></div>
+        <div class="stat-label">Website Dibuat</div>
+      </div>
+      <div>
+        <div class="stat-num">3<span>+</span></div>
+        <div class="stat-label">Perusahaan</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <img src="photo.png" alt="Yohanes Christian" onerror="this.parentElement.style.display='none'">
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text fade-in">
+      <div class="section-label">// about me</div>
+      <h2 class="section-title">Passion untuk<br>Desain & Teknologi</h2>
+      <p>
+        Saya adalah seorang <strong>Graphic Designer dan Web Designer</strong> dengan pengalaman lebih dari <strong>8 tahun</strong> di industri desain dan teknologi. Saya telah membangun berbagai website profesional untuk perusahaan-perusahaan besar di Indonesia.
+      </p>
+      <p>
+        Selain keahlian desain tradisional, saya kini aktif mengeksplorasi dunia <strong>AI Generative Content</strong> — memanfaatkan teknologi terkini untuk menciptakan konten web, video, dan gambar berkualitas tinggi secara lebih efisien.
+      </p>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">LOKASI</div>
+          <div class="info-value">Serpong, Banten</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">LAHIR</div>
+          <div class="info-value">Jakarta, 30 Mei 1989</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">TELEPON</div>
+          <div class="info-value">0877-8445-3598</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">STATUS</div>
+          <div class="info-value">Open to Work ✓</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="skills-col fade-in">
+      <div class="skill-group-title">Design Tools</div>
+      <div class="skill-item">
+        <div class="skill-row"><span class="skill-name">Adobe Photoshop</span><span class="skill-pct">95%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-w="95"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-row"><span class="skill-name">Adobe Illustrator</span><span class="skill-pct">90%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-w="90"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-row"><span class="skill-name">Adobe After Effects</span><span class="skill-pct">85%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-w="85"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-row"><span class="skill-name">Adobe InDesign</span><span class="skill-pct">88%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-w="88"></div></div>
+      </div>
+
+      <div class="skill-group-title">Web Development</div>
+      <div class="skill-item">
+        <div class="skill-row"><span class="skill-name">HTML5 & CSS3</span><span class="skill-pct">92%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-w="92"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-row"><span class="skill-name">JavaScript & PHP</span><span class="skill-pct">75%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-w="75"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-row"><span class="skill-name">WordPress & Magento</span><span class="skill-pct">90%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-w="90"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-row"><span class="skill-name">SEO Optimization</span><span class="skill-pct">82%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-w="82"></div></div>
+      </div>
+
+      <div class="skill-group-title">AI Generative</div>
+      <div class="skill-item">
+        <div class="skill-row"><span class="skill-name">AI Image Generation</span><span class="skill-pct">87%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-w="87"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-row"><span class="skill-name">AI Video Production</span><span class="skill-pct">80%</span></div>
+        <div class="skill-track"><div class="skill-fill" data-w="80"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label fade-in">// work experience</div>
+  <h2 class="section-title fade-in">Perjalanan<br>Karir</h2>
+  <p class="section-desc fade-in">Lebih dari 8 tahun membangun brand visual dan digital presence untuk perusahaan-perusahaan di Indonesia.</p>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="tl-header">
+        <div class="tl-role">Senior Graphic & Web Designer</div>
+        <div class="tl-period">2014 — Sekarang</div>
+      </div>
+      <div class="tl-company">PT. Sterling Tulus Cemerlang — IT Consultant</div>
+      <div class="tl-desc">
+        Bertanggung jawab penuh atas pembuatan, pengembangan, dan maintenance seluruh aset digital perusahaan. Membangun ekosistem website yang saling terhubung mulai dari company profile, product website, dokumentasi, hingga blog. Juga mengelola strategi SEO, video promosi, media promosi (brosur, banner, booth event), dan mulai mengintegrasikan AI generatif ke dalam workflow desain.
+      </div>
+      <div class="tl-tags">
+        <span class="tag">WordPress</span>
+        <span class="tag">HTML/CSS</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">SEO</span>
+        <span class="tag">Adobe Suite</span>
+        <span class="tag">AI Generative</span>
+        <span class="tag">Video Production</span>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="tl-header">
+        <div class="tl-role">Graphic Designer & Web Designer</div>
+        <div class="tl-period">2011 — 2014</div>
+      </div>
+      <div class="tl-company">PT. Global Pratama Persada — Distributor CCTV & Web</div>
+      <div class="tl-desc">
+        Bergabung di divisi Graphic Design dan mulai belajar web design secara profesional. Membuat berbagai material promosi digital dan cetak: brosur, banner web, newsletter, company profile, dan mockup web design. Di sinilah fondasi keahlian HTML & CSS dibangun.
+      </div>
+      <div class="tl-tags">
+        <span class="tag">Graphic Design</span>
+        <span class="tag">HTML/CSS</span>
+        <span class="tag">Adobe Ps/Ai</span>
+        <span class="tag">Print Design</span>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="tl-header">
+        <div class="tl-role">Graphic Design Intern</div>
+        <div class="tl-period">2010 — 3 Bulan</div>
+      </div>
+      <div class="tl-company">PT. Media Komunitas Serpong — Majalah Kawasan</div>
+      <div class="tl-desc">
+        Magang kerja praktik di perusahaan penerbitan majalah kawasan (Info Serpong, Info Bogor, Info Puri). Membantu tim desain grafis dalam layout majalah dan pembuatan iklan display.
+      </div>
+      <div class="tl-tags">
+        <span class="tag">Layout Majalah</span>
+        <span class="tag">Desain Iklan</span>
+        <span class="tag">Adobe InDesign</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-label fade-in">// portfolio</div>
+  <h2 class="section-title fade-in">Website yang<br>Sudah Dibuat</h2>
+  <p class="section-desc fade-in">Klik pada card untuk melihat website secara langsung di dalam portfolio ini.</p>
+
+  <div class="portfolio-grid">
+
+    <!-- Featured: iReap Asset Docs -->
+    <div class="portfolio-card featured" onclick="openLightbox('https://asset.ireappos.com/i/?lang=id', 'asset.ireappos.com/i/?lang=id')">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+        </div>
+        <div class="browser-url"><span class="https">https://</span>asset.ireappos.com/i/?lang=id</div>
+      </div>
+      <div class="iframe-wrap">
+        <iframe src="https://asset.ireappos.com/i/?lang=id" loading="lazy" title="iReap Asset Docs" sandbox="allow-scripts allow-same-origin"></iframe>
+        <div class="iframe-overlay"></div>
+        <a href="https://asset.ireappos.com/i/?lang=id" target="_blank" class="iframe-visit" onclick="event.stopPropagation()">
+          ↗ Buka Website
+        </a>
+      </div>
+      <div class="card-body">
+        <div class="card-title">iReap Asset — Dokumentasi</div>
+        <div class="card-desc">Portal dokumentasi lengkap untuk software manajemen aset perusahaan iReap. Dilengkapi panduan langkah-demi-langkah, pencarian cepat, dan multi-bahasa.</div>
+        <div class="card-tags">
+          <span class="tag">Web App</span>
+          <span class="tag">Documentation</span>
+          <span class="tag">Multi-language</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- iReap Asset Landing -->
+    <div class="portfolio-card" onclick="openLightbox('https://asset.ireappos.com/', 'asset.ireappos.com')">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+        </div>
+        <div class="browser-url"><span class="https">https://</span>asset.ireappos.com</div>
+      </div>
+      <div class="iframe-wrap">
+        <iframe src="https://asset.ireappos.com/" loading="lazy" title="iReap Asset" sandbox="allow-scripts allow-same-origin"></iframe>
+        <div class="iframe-overlay"></div>
+        <a href="https://asset.ireappos.com/" target="_blank" class="iframe-visit" onclick="event.stopPropagation()">↗ Buka</a>
+      </div>
+      <div class="card-body">
+        <div class="card-title">iReap Asset</div>
+        <div class="card-desc">Landing page software manajemen aset perusahaan berbasis cloud.</div>
+        <div class="card-tags"><span class="tag">Landing Page</span><span class="tag">SaaS</span></div>
+      </div>
+    </div>
+
+    <!-- iReap POS -->
+    <div class="portfolio-card" onclick="openLightbox('https://www.ireappos.com/', 'ireappos.com')">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+        </div>
+        <div class="browser-url"><span class="https">https://</span>ireappos.com</div>
+      </div>
+      <div class="static-preview">
+        <div class="preview-pattern"></div>
+        <div class="preview-icon">🛒</div>
+        <div class="preview-url">ireappos.com</div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">iReap POS</div>
+        <div class="card-desc">Website produk POS (Point of Sale) software untuk bisnis ritel.</div>
+        <div class="card-tags"><span class="tag">Product Website</span><span class="tag">WordPress</span></div>
+      </div>
+    </div>
+
+    <!-- Sterling Team -->
+    <div class="portfolio-card" onclick="openLightbox('https://www.sterling-team.com/', 'sterling-team.com')">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+        </div>
+        <div class="browser-url"><span class="https">https://</span>sterling-team.com</div>
+      </div>
+      <div class="static-preview">
+        <div class="preview-pattern"></div>
+        <div class="preview-icon">💼</div>
+        <div class="preview-url">sterling-team.com</div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Sterling Team</div>
+        <div class="card-desc">Company profile website untuk IT consultant yang berfokus pada solusi SAP Business One.</div>
+        <div class="card-tags"><span class="tag">Company Profile</span><span class="tag">IT Consultant</span></div>
+      </div>
+    </div>
+
+    <!-- SAP B1 Tips -->
+    <div class="portfolio-card" onclick="openLightbox('https://www.sap-business-one-tips.com/', 'sap-business-one-tips.com')">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+        </div>
+        <div class="browser-url"><span class="https">https://</span>sap-business-one-tips.com</div>
+      </div>
+      <div class="static-preview">
+        <div class="preview-pattern"></div>
+        <div class="preview-icon">📊</div>
+        <div class="preview-url">sap-business-one-tips.com</div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">SAP Business One Tips</div>
+        <div class="card-desc">Blog & knowledge base berisi tips dan tutorial SAP Business One untuk para pengguna.</div>
+        <div class="card-tags"><span class="tag">Blog</span><span class="tag">SEO</span><span class="tag">WordPress</span></div>
+      </div>
+    </div>
+
+    <!-- SAPB1 Cloud -->
+    <div class="portfolio-card" onclick="openLightbox('https://www.sapb1-cloud.com/', 'sapb1-cloud.com')">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+        </div>
+        <div class="browser-url"><span class="https">https://</span>sapb1-cloud.com</div>
+      </div>
+      <div class="static-preview">
+        <div class="preview-pattern"></div>
+        <div class="preview-icon">☁️</div>
+        <div class="preview-url">sapb1-cloud.com</div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">SAP B1 Cloud</div>
+        <div class="card-desc">Landing page untuk layanan SAP Business One berbasis cloud.</div>
+        <div class="card-tags"><span class="tag">Landing Page</span><span class="tag">Cloud SaaS</span></div>
+      </div>
+    </div>
+
+    <!-- Stock Take Count -->
+    <div class="portfolio-card" onclick="openLightbox('https://www.sterling-team.com/stock-take-count/', 'sterling-team.com/stock-take-count')">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+        </div>
+        <div class="browser-url"><span class="https">https://</span>sterling-team.com/stock-take-count/</div>
+      </div>
+      <div class="static-preview">
+        <div class="preview-pattern"></div>
+        <div class="preview-icon">📦</div>
+        <div class="preview-url">stock-take-count</div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Stock Take Count App</div>
+        <div class="card-desc">Aplikasi web untuk stock opname / hitung stok gudang secara digital dan efisien.</div>
+        <div class="card-tags"><span class="tag">Web App</span><span class="tag">Inventory</span></div>
+      </div>
+    </div>
+
+    <!-- Planet Surf -->
+    <div class="portfolio-card" onclick="openLightbox('https://store.planetsurfonline.com/', 'store.planetsurfonline.com')">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+        </div>
+        <div class="browser-url"><span class="https">https://</span>store.planetsurfonline.com</div>
+      </div>
+      <div class="static-preview">
+        <div class="preview-pattern"></div>
+        <div class="preview-icon">🏄</div>
+        <div class="preview-url">store.planetsurfonline.com</div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Planet Surf Online Store</div>
+        <div class="card-desc">Toko online peralatan surfing dengan katalog produk dan sistem pembelian online.</div>
+        <div class="card-tags"><span class="tag">E-Commerce</span><span class="tag">Magento</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- AI SKILLS -->
+<section id="ai-skills">
+  <div class="section-label fade-in">// new skills</div>
+  <h2 class="section-title fade-in">AI Generative<br>Content Creation</h2>
+  <p class="section-desc fade-in">Memanfaatkan teknologi AI terbaru untuk menghasilkan konten berkualitas tinggi dengan lebih cepat dan efisien.</p>
+
+  <div class="ai-grid">
+    <div class="ai-card">
+      <span class="ai-icon">🌐</span>
+      <div class="ai-card-title">AI-Powered Web Development</div>
+      <div class="ai-card-desc">Memanfaatkan tools AI seperti GitHub Copilot, v0, dan Cursor untuk mempercepat proses coding dan menghasilkan kode yang lebih bersih dan efisien. Mampu membuat website kompleks dalam waktu lebih singkat.</div>
+    </div>
+    <div class="ai-card">
+      <span class="ai-icon">🎨</span>
+      <div class="ai-card-title">AI Image Generation</div>
+      <div class="ai-card-desc">Membuat visual, ilustrasi, dan aset desain profesional menggunakan Midjourney, DALL-E, Stable Diffusion, dan Adobe Firefly. Diintegrasikan dengan keahlian desain grafis tradisional untuk hasil yang optimal.</div>
+    </div>
+    <div class="ai-card">
+      <span class="ai-icon">🎬</span>
+      <div class="ai-card-title">AI Video Production</div>
+      <div class="ai-card-desc">Memproduksi video promosi, explainer video, dan konten marketing menggunakan Sora, RunwayML, Pika Labs, dan CapCut AI. Menghasilkan konten video berkualitas tinggi dengan workflow yang lebih efisien.</div>
+    </div>
+    <div class="ai-card">
+      <span class="ai-icon">⚡</span>
+      <div class="ai-card-title">Prompt Engineering</div>
+      <div class="ai-card-desc">Ahli dalam meracik prompt yang tepat dan terstruktur untuk menghasilkan output AI yang konsisten dan berkualitas tinggi. Memahami cara kerja berbagai model AI generatif untuk memaksimalkan hasilnya.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label fade-in">// education</div>
+  <h2 class="section-title fade-in">Pendidikan</h2>
+  <div class="edu-grid" style="margin-top: 48px;">
+    <div class="edu-card fade-in">
+      <div class="edu-year">2007 — 2011</div>
+      <div class="edu-degree">S1 — Desain Komunikasi Visual</div>
+      <div class="edu-school">Universitas Esa Unggul<br>Kebon Jeruk, Jakarta</div>
+    </div>
+    <div class="edu-card fade-in">
+      <div class="edu-year">2003 — 2005</div>
+      <div class="edu-degree">Sekolah Menengah Atas</div>
+      <div class="edu-school">SMU Tarsisius 2<br>Kebon Jeruk, Jakarta</div>
+    </div>
+    <div class="edu-card fade-in">
+      <div class="edu-year">2001 — 2003</div>
+      <div class="edu-degree">Sekolah Menengah Pertama</div>
+      <div class="edu-school">SMP Tarsisius 2<br>Kebon Jeruk, Jakarta</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label" style="position:relative;z-index:1;margin-bottom:16px;">// contact</div>
+  <div class="contact-title">
+    Siap Berkolaborasi?<br>
+    <span>Mari Terhubung.</span>
+  </div>
+  <div class="contact-links">
+    <a href="tel:+6287784453598" class="contact-link">
+      <span>📱</span> 0877-8445-3598
+    </a>
+    <a href="https://www.instagram.com/stem.indonesia/" target="_blank" class="contact-link">
+      <span>📸</span> @stem.indonesia
+    </a>
+    <a href="https://asset.ireappos.com" target="_blank" class="contact-link">
+      <span>🌐</span> asset.ireappos.com
+    </a>
+    <a href="https://www.sterling-team.com" target="_blank" class="contact-link">
+      <span>💼</span> sterling-team.com
+    </a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 Yohanes Christian</span>
+  &nbsp;·&nbsp;
+  <span>Graphic Designer · Web Designer · AI Content Creator</span>
+  &nbsp;·&nbsp;
+  <span style="color:var(--accent)">Serpong, Indonesia</span>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <div class="lightbox-inner">
+    <div class="lightbox-chrome">
+      <div class="browser-dots">
+        <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+      </div>
+      <div class="lightbox-url" id="lightboxUrl">https://</div>
+      <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    </div>
+    <iframe class="lightbox-iframe" id="lightboxFrame" src="" title="Website Preview"></iframe>
+  </div>
+</div>
+
+<script>
+  // ── Cursor ──────────────────────────────────────────────────────────────
+  const cur = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cur.style.left  = mx - 6  + 'px';
+    cur.style.top   = my - 6  + 'px';
+  });
+  (function animRing() {
+    rx += (mx - rx) * .12;
+    ry += (my - ry) * .12;
+    ring.style.left = rx - 18 + 'px';
+    ring.style.top  = ry - 18 + 'px';
+    requestAnimationFrame(animRing);
+  })();
+  document.querySelectorAll('a, button, .portfolio-card').forEach(el => {
+    el.addEventListener('mouseenter', () => cur.style.transform = 'scale(2.5)');
+    el.addEventListener('mouseleave', () => cur.style.transform = 'scale(1)');
+  });
+
+  // ── Sticky nav ──────────────────────────────────────────────────────────
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // ── Intersection Observer ───────────────────────────────────────────────
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        // animate skill bars
+        e.target.querySelectorAll('.skill-fill').forEach(bar => {
+          bar.style.width = bar.dataset.w + '%';
+        });
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-in, .timeline-item, .portfolio-card, .ai-card').forEach(el => {
+    observer.observe(el);
+  });
+  // also observe about for skill bars
+  document.querySelectorAll('#about .fade-in').forEach(el => observer.observe(el));
+
+  // stagger portfolio cards
+  document.querySelectorAll('.portfolio-card').forEach((card, i) => {
+    card.style.transitionDelay = (i * 0.07) + 's';
+  });
+  document.querySelectorAll('.ai-card').forEach((card, i) => {
+    card.style.transitionDelay = (i * 0.1) + 's';
+  });
+  document.querySelectorAll('.timeline-item').forEach((item, i) => {
+    item.style.transitionDelay = (i * 0.12) + 's';
+  });
+
+  // ── Lightbox ────────────────────────────────────────────────────────────
+  function openLightbox(url, displayUrl) {
+    document.getElementById('lightboxFrame').src = url;
+    document.getElementById('lightboxUrl').textContent = 'https://' + displayUrl;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox(e) {
+    if (!e || e.target === document.getElementById('lightbox') || e.currentTarget.classList.contains('lightbox-close')) {
+      document.getElementById('lightbox').classList.remove('open');
+      document.getElementById('lightboxFrame').src = '';
+      document.body.style.overflow = '';
+    }
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox({ target: document.getElementById('lightbox') });
+  });
+
+  // trigger skill bars for visible elements on load
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.skill-fill').forEach(bar => {
+      const rect = bar.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        bar.style.width = bar.dataset.w + '%';
+      }
+    });
+  });
+</script>
+</body>
+</html>
